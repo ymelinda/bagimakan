@@ -48,4 +48,26 @@ class FeatureTest extends TestCase
         // Cek hash password yang tersimpan cocok dengan password yang diinput
         $this->assertTrue(app('hash')->check('secret', user::first()->password));
     }
+
+    public function user_can_update()
+    {
+        // Update data user yang sudah register tadi
+        $update_register = user::find($user->id)->update([
+            'username' => 'Don',
+            'email' =>'don@gmail.com',
+            'password' => 'don123',
+        ]);
+
+        // Cek apakah datanya benar sudah diupdate atau tidak
+        $this->assertDatabaseHas('users', [
+            'username' => 'Don',
+            'email' => 'don@gmail.com'
+         ]);
+    }
+
+    public function user_can_delete()
+    {
+        // Hapus data user
+        user::destroy($user->id);
+    }
 }
